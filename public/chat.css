@@ -31,7 +31,7 @@
 
 .Chat .main .outer form{
     display: grid;
-    grid-template-columns: auto 15%;
+    grid-template-columns: 20% auto 15%;
 }
 
 .Chat .sidebar .title{
