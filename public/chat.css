@@ -41,6 +41,10 @@
     padding: 5px;
 }
 
+.Chat .main .outer form #input{
+    font: 14px/1.5 Courgette, HandWriting;
+}
+
 .Chat .sidebar{
     background-color: white;
 }
