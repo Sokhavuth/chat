@@ -1,0 +1,57 @@
+/* chat.css */
+
+.Chat{
+    margin-top: 50px;
+    display: grid;
+    grid-template-columns: 70% auto;
+    grid-gap: 15px;
+}
+
+.Chat input{
+    font: var(--body-font);
+    padding: 5px;
+}
+
+.Chat .main .outer{
+    background-color: lavender;
+    padding: 20px;
+}
+
+.Chat .main .title{
+    background: black;
+    text-align: right;
+}
+
+.Chat .main #messages{
+    height: 400px;
+    background-color: white;
+    border: 1px solid grey;
+    padding: 20px;
+}
+
+.Chat .main .outer form{
+    display: grid;
+    grid-template-columns: auto 15%;
+}
+
+.Chat .sidebar .title{
+    text-align: center;
+    background-color: black;
+    color: white;
+    padding: 5px;
+}
+
+.Chat .sidebar{
+    background-color: white;
+}
+
+.Chat .sidebar .content{
+    padding: 20px;
+}
+
+@media only screen and (max-width: 600px){
+    .Chat{
+        grid-template-columns: 100%;
+        padding: 10px;
+    }
+}
