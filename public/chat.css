@@ -54,4 +54,8 @@
         grid-template-columns: 100%;
         padding: 10px;
     }
+
+    .Chat .main .outer{
+        padding: 0;
+    }
 }
