@@ -16,9 +16,10 @@
                 <input type="button" value="Leave chat" />
             </div>
             <div class="outer">
-                <div id="messages">Chat messages</div>
-                <form id="form" action="" onSubmit="">
-                    <input type="text" required placeholder="Chat name" />
+                <div id="msg-board"></div>
+                <form action="" onSubmit="submitHandler(event)">
+                    <input type="text" id="chat-name" 
+                    required placeholder="Chat name" />
                     <input id="input" autocomplete="off" required 
                     placeholder="Type your message here" />
                     <input type="submit" value="Send" />
@@ -33,7 +34,31 @@
 
     <script src="/socket.io/socket.io.js"></script>
     <script>
-        let socket = io();
+        const socket = io();
+
+        function submitHandler(e){
+            e.preventDefault();
+            const chatName = document.getElementById('chat-name');
+            const input = document.getElementById('input');
+            const obj = {
+                chatName: chatName.value, 
+                message: input.value,
+            };
+
+            if (input.value) {
+                socket.emit('chat message', obj);
+                input.value = '';
+            }
+        }
+
+        socket.on('chat message', function(obj){
+            const msgBoard = document.getElementById('msg-board');
+            const element = document.createElement('div');
+            const msg = `${obj.chatName}: ${obj.message}`;
+            element.textContent = msg;
+            msgBoard.appendChild(element);
+            window.scrollTo(0, document.body.scrollHeight);
+        });
     </script>
   </body>
 </html>

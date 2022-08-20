@@ -22,11 +22,12 @@
     text-align: right;
 }
 
-.Chat .main #messages{
+.Chat .main #msg-board{
     height: 400px;
     background-color: white;
     border: 1px solid grey;
     padding: 20px;
+    font: 14px/1.5 Courgette, HandWriting;
 }
 
 .Chat .main .outer form{

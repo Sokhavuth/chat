@@ -13,17 +13,19 @@ const io = new Server(server);
 
 
 const port = process.env.PORT || 3000;
-
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/index.html');
+    res.sendFile(`${__dirname}/index.html`);
 });
 
 io.on('connection', (socket) => {
     console.log('a user connected');
+    socket.on('chat message', (obj) => {
+        io.emit('chat message', obj);
+    });
 });
 
 server.listen(port, () => {
-  console.log(`listening on *${port}`);
+    console.log(`listening on *${port}`);
 });
