@@ -28,6 +28,7 @@
     border: 1px solid grey;
     padding: 20px;
     font: 14px/1.5 Courgette, HandWriting;
+    overflow: auto;
 }
 
 .Chat .main .outer form{

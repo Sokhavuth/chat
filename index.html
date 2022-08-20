@@ -57,7 +57,7 @@
             const msg = `${obj.chatName}: ${obj.message}`;
             element.textContent = msg;
             msgBoard.appendChild(element);
-            window.scrollTo(0, document.body.scrollHeight);
+            element.scrollIntoView();
         });
     </script>
   </body>
