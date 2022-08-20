@@ -31,6 +31,10 @@
     overflow: auto;
 }
 
+.Chat .main #msg-board .new-user{
+    color: green;
+}
+
 .Chat .main .outer form{
     display: grid;
     grid-template-columns: 20% auto 15%;

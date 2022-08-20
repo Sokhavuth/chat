@@ -19,9 +19,19 @@ app.get('/', (req, res) => {
     res.sendFile(`${__dirname}/index.html`);
 });
 
+const users = {};
 io.on('connection', (socket) => {
-    console.log('a user connected');
+    const userid = Date.now() + Math.round(Math.random() * 1E9).toString();
+    socket.emit('connection', userid);
+
+    socket.on('new user', (obj) => {
+        users[obj.userid] = obj.username;
+        obj.users = users;
+        io.emit('new user', obj);
+    });
+
     socket.on('chat message', (obj) => {
+        obj.chatName = users[obj.userid];
         io.emit('chat message', obj);
     });
 });
