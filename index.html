@@ -45,32 +45,6 @@
             }
         });
 
-        function endChat(){
-            const userid = localStorage.getItem('userid');
-            socket.emit("user left", userid);
-        };
-
-        socket.on("user left", (obj) => {
-            const msgBoard = document.getElementById('msg-board');
-            let element = document.createElement('div');
-            element.setAttribute("class", "user-left");
-            const msg = `${obj.username} left the conversation`;
-            element.textContent = msg;
-            msgBoard.appendChild(element);
-            element.scrollIntoView();
-
-            const users = document.getElementById('users');
-            users.innerHTML = '';
-            for(let key in obj.users){
-                element = document.createElement('div');
-                element.setAttribute("class", "user");
-                const user = obj.users[key];
-                element.textContent = user;
-                users.appendChild(element);
-                element.scrollIntoView();
-            };
-        });
-
         function onChange(){
             const username = document.getElementById('chat-name');
             if(username.value){
@@ -126,6 +100,36 @@
             msgBoard.appendChild(element);
             element.scrollIntoView();
         });
+
+        function endChat(){
+            const username = document.getElementById('chat-name');
+            if(username.value){
+                const userid = localStorage.getItem('userid');
+                socket.emit("user left", userid);
+            }
+        };
+
+        socket.on("user left", (obj) => {
+            const msgBoard = document.getElementById('msg-board');
+            let element = document.createElement('div');
+            element.setAttribute("class", "user-left");
+            const msg = `${obj.username} left the conversation`;
+            element.textContent = msg;
+            msgBoard.appendChild(element);
+            element.scrollIntoView();
+
+            const users = document.getElementById('users');
+            users.innerHTML = '';
+            for(let key in obj.users){
+                element = document.createElement('div');
+                element.setAttribute("class", "user");
+                const user = obj.users[key];
+                element.textContent = user;
+                users.appendChild(element);
+                element.scrollIntoView();
+            };
+        });
+
     </script>
   </body>
 </html>
