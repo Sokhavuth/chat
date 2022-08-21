@@ -21,8 +21,7 @@ app.get('/', (req, res) => {
 
 const users = {};
 io.on('connection', (socket) => {
-    const userid = Date.now() + Math.round(Math.random() * 1E9).toString();
-    socket.emit('connection', userid);
+    socket.emit('connection');
 
     socket.on('new user', (obj) => {
         users[obj.userid] = obj.username;
@@ -33,6 +32,16 @@ io.on('connection', (socket) => {
     socket.on('chat message', (obj) => {
         obj.chatName = users[obj.userid];
         io.emit('chat message', obj);
+    });
+
+    socket.on('user left', (userid) => {
+        const obj = {};
+        const username = JSON.stringify(users[userid]);
+        obj.username = JSON.parse(username);
+        delete users[userid];
+        obj.users = {...users};
+        io.emit('user left', obj);
+        socket.disconnect();
     });
 });
 

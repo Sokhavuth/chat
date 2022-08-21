@@ -15,7 +15,7 @@
     <section class="Chat region">
         <div class="main">
             <div class="title">
-                <input type="button" value="Leave chat" />
+                <input type="button" onClick="endChat()" value="Leave chat" />
             </div>
             <div class="outer">
                 <div id="msg-board"></div>
@@ -38,11 +38,38 @@
     <script>
         const socket = io();
 
-        socket.on('connection', (userid) => {
+        socket.on('connection', () => {
             if(!localStorage.getItem('userid')){
+                const userid = Date.now() + Math.round(Math.random() * 1E9).toString();
                 localStorage.setItem('userid', userid);
             }
-        })
+        });
+
+        function endChat(){
+            const userid = localStorage.getItem('userid');
+            socket.emit("user left", userid);
+        };
+
+        socket.on("user left", (obj) => {
+            const msgBoard = document.getElementById('msg-board');
+            let element = document.createElement('div');
+            element.setAttribute("class", "user-left");
+            const msg = `${obj.username} left the conversation`;
+            element.textContent = msg;
+            msgBoard.appendChild(element);
+            element.scrollIntoView();
+
+            const users = document.getElementById('users');
+            users.innerHTML = '';
+            for(let key in obj.users){
+                element = document.createElement('div');
+                element.setAttribute("class", "user");
+                const user = obj.users[key];
+                element.textContent = user;
+                users.appendChild(element);
+                element.scrollIntoView();
+            };
+        });
 
         function onChange(){
             const username = document.getElementById('chat-name');
@@ -54,7 +81,7 @@
                 
                 socket.emit('new user', obj);
             }
-        }
+        };
 
         socket.on('new user', (obj) => {
             const msgBoard = document.getElementById('msg-board');
@@ -74,9 +101,8 @@
                 element.textContent = user;
                 users.appendChild(element);
                 element.scrollIntoView();
-            }
-            
-        })
+            };
+        });
 
         function submitHandler(e){
             e.preventDefault();
@@ -90,7 +116,7 @@
                 socket.emit('chat message', obj);
                 input.value = '';
             }
-        }
+        };
 
         socket.on('chat message', function(obj){
             const msgBoard = document.getElementById('msg-board');

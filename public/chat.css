@@ -1,10 +1,11 @@
 /* chat.css */
 
 .Chat{
-    margin-top: 50px;
+    padding: 50px 0;
     display: grid;
     grid-template-columns: 70% auto;
     grid-gap: 15px;
+    height: 530px;
 }
 
 .Chat input{
@@ -23,7 +24,7 @@
 }
 
 .Chat .main #msg-board{
-    height: 400px;
+    height: 395px;
     background-color: white;
     border: 1px solid grey;
     padding: 20px;
@@ -33,6 +34,10 @@
 
 .Chat .main #msg-board .new-user{
     color: green;
+}
+
+.Chat .main #msg-board .user-left{
+    color: lightgrey;
 }
 
 .Chat .main .outer form{
@@ -56,7 +61,9 @@
 }
 
 .Chat .sidebar .content{
+    max-height: 500px;
     padding: 20px;
+    overflow: auto;
 }
 
 @media only screen and (max-width: 600px){
