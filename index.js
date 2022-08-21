@@ -24,25 +24,35 @@ io.on('connection', (socket) => {
     socket.emit('connection');
 
     socket.on('new user', (obj) => {
-        users[obj.userid] = obj.username;
+        users[socket.id] = obj.username;
         obj.users = users;
         io.emit('new user', obj);
     });
 
     socket.on('chat message', (obj) => {
-        obj.chatName = users[obj.userid];
+        obj.chatName = users[socket.id];
         io.emit('chat message', obj);
     });
 
-    socket.on('user left', (userid) => {
-        const obj = {};
-        const username = JSON.stringify(users[userid]);
-        obj.username = JSON.parse(username);
-        delete users[userid];
-        obj.users = {...users};
-        io.emit('user left', obj);
+    socket.on('user left', () => {
+        deleteUser();
         socket.disconnect();
     });
+
+    socket.on("disconnect", () => {
+        if(users[socket.id]){
+            deleteUser();
+        }
+    });
+
+    function deleteUser(){
+        const obj = {};
+        const username = JSON.stringify(users[socket.id]);
+        obj.username = JSON.parse(username);
+        delete users[socket.id];
+        obj.users = {...users};
+        io.emit('user left', obj);
+    }
 });
 
 server.listen(port, () => {

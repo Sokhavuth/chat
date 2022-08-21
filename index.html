@@ -15,8 +15,7 @@
     <section class="Chat region">
         <div class="main">
             <div class="title">
-                <input type="button" onClick="endChat()" value="Leave chat"
-                onbeforeunload="return endChat()" />
+                <input type="button" onClick="endChat()" value="Leave chat" />
             </div>
             <div class="outer">
                 <div id="msg-board"></div>
@@ -38,20 +37,19 @@
     <script src="/socket.io/socket.io.js"></script>
     <script>
         const socket = io();
-
+/*
         socket.on('connection', () => {
             if(!localStorage.getItem('userid')){
                 const userid = Date.now() + Math.round(Math.random() * 1E9).toString();
                 localStorage.setItem('userid', userid);
             }
         });
-
+*/
         function onChange(){
             const username = document.getElementById('chat-name');
             if(username.value){
                 const obj = {
                     username: username.value,
-                    userid: localStorage.getItem('userid'),
                 }
                 
                 socket.emit('new user', obj);
@@ -83,7 +81,6 @@
             e.preventDefault();
             const input = document.getElementById('input');
             const obj = {
-                userid: localStorage.getItem("userid"), 
                 message: input.value,
             };
 
@@ -106,7 +103,7 @@
             const username = document.getElementById('chat-name');
             if(username.value){
                 const userid = localStorage.getItem('userid');
-                socket.emit("user left", userid);
+                socket.emit("user left");
             }
         };
 
