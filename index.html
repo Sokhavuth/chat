@@ -11,11 +11,12 @@
     <link href="/fonts/setup.css" rel="stylesheet" />
     <link href="/logo.png" rel="icon" />
   </head>
-  <body onunload="endChat()">
+  <body>
     <section class="Chat region">
         <div class="main">
             <div class="title">
-                <input type="button" onClick="endChat()" value="Leave chat" />
+                <input type="button" onClick="endChat()" value="Leave chat"
+                onbeforeunload="endChat()" />
             </div>
             <div class="outer">
                 <div id="msg-board"></div>
